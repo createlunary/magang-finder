@@ -17,7 +17,7 @@ import { useJob, useUpdateJob } from "@/hooks/use-api";
 import type { JobStatus } from "@/lib/types";
 import { IS_SHOWCASE } from "@/lib/mode";
 import { STATUS_LABEL, sourceLabel } from "@/lib/types";
-import { bandColor, bandLabel, formatDate, scoreBand } from "@/lib/utils";
+import { amanUrl, bandColor, bandLabel, formatDate, scoreBand } from "@/lib/utils";
 
 const FLOW: JobStatus[] = ["baru", "dilamar", "diterima", "ditolak"];
 
@@ -194,7 +194,7 @@ export default function DetailLowonganPage() {
           )}
 
           <Button asChild className="self-start">
-            <a href={job.url} target="_blank" rel="noreferrer">
+            <a href={amanUrl(job.url)} target="_blank" rel="noopener noreferrer">
               Lihat sumber lowongan asli <ArrowUpRight />
             </a>
           </Button>

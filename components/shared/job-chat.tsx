@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { qk, useChat, useClearChat } from "@/hooks/use-api";
 import { api } from "@/lib/api";
 import type { ChatMessage } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { amanUrl, cn } from "@/lib/utils";
 
 const SARAN = [
   "Kira-kira di posisi ini aku bakal ngerjain apa aja?",
@@ -29,7 +29,7 @@ const MD: Components = {
   ol: ({ children }) => <ol className="mb-2 flex list-decimal flex-col gap-1 pl-5 last:mb-0">{children}</ol>,
   strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
   a: ({ href, children }) => (
-    <a href={href} target="_blank" rel="noreferrer" className="break-words text-primary underline-offset-2 hover:underline">
+    <a href={amanUrl(href)} target="_blank" rel="noreferrer" className="break-words text-primary underline-offset-2 hover:underline">
       {children}
     </a>
   ),

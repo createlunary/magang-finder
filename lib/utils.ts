@@ -64,3 +64,17 @@ export function timeAgo(iso: string) {
   if (h < 24) return `${h} jam lalu`;
   return `${Math.floor(h / 24)} hari lalu`;
 }
+
+/**
+ * Tautan dari data luar (hasil scraping, sumber laporan Claude) hanya boleh http/https.
+ * React 19 sudah memblokir `javascript:`, tapi skema lain (data:, vbscript:, file:) tidak.
+ */
+export function amanUrl(u: string | null | undefined): string | undefined {
+  if (!u) return undefined;
+  try {
+    const p = new URL(u);
+    return p.protocol === "http:" || p.protocol === "https:" ? p.href : undefined;
+  } catch {
+    return undefined;
+  }
+}

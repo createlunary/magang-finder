@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useResearch, useStartResearch } from "@/hooks/use-api";
 import type { CompanyReport } from "@/lib/types";
-import { timeAgo } from "@/lib/utils";
+import { amanUrl, timeAgo } from "@/lib/utils";
 import { IS_SHOWCASE } from "@/lib/mode";
 
 const LEVEL: Record<CompanyReport["level"], { label: string; color: string }> = {
@@ -43,7 +43,7 @@ function Refs({ ids, sources }: { ids: number[]; sources: CompanyReport["sources
       {ids.filter((i) => sources[i - 1]).map((i) => (
         <a
           key={i}
-          href={sources[i - 1].url}
+          href={amanUrl(sources[i - 1].url)}
           target="_blank"
           rel="noreferrer"
           title={sources[i - 1].title}
@@ -163,7 +163,7 @@ function Report({ r }: { r: CompanyReport }) {
           {r.sources.map((s, i) => (
             <li key={s.url + i} className="flex items-start gap-2 text-[12.5px]">
               <span className="w-6 shrink-0 font-mono text-faint">[{i + 1}]</span>
-              <a href={s.url} target="_blank" rel="noreferrer" className="min-w-0 break-words text-muted-foreground hover:text-primary hover:underline">
+              <a href={amanUrl(s.url)} target="_blank" rel="noopener noreferrer" className="min-w-0 break-words text-muted-foreground hover:text-primary hover:underline">
                 {s.title} <ArrowUpRight className="inline size-3" />
               </a>
             </li>

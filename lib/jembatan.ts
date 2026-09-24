@@ -59,7 +59,13 @@ export function kembaliSah(raw: string | null): string | null {
     /^10\.\d+\.\d+\.\d+$/.test(h) ||
     /^192\.168\.\d+\.\d+$/.test(h) ||
     /^172\.(1[6-9]|2\d|3[01])\.\d+\.\d+$/.test(h);
-  return privat ? `${u.origin}/masuk` : null;
+  if (!privat) return null;
+  // MF_PANEL_ASAL (mis. "http://localhost:3000,http://192.168.1.4:3000") mempersempit ke
+  // panel milik sendiri: tanpa itu, IP privat mana pun diterima — termasuk laptop penyerang
+  // di WiFi publik yang sama, yang bisa memancing tiket lewat tautan login buatannya.
+  const izin = env("MF_PANEL_ASAL").split(",").map((s) => s.trim().replace(/\/$/, "")).filter(Boolean);
+  if (izin.length && !izin.includes(u.origin)) return null;
+  return `${u.origin}/masuk`;
 }
 
 /** Payload id_token. Tanda tangannya tidak diverifikasi ulang karena token diterima
