@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Token warna ---------- */
+:root {
+  --background: #f7f5ef;
+  --foreground: #17170f;
+  --card: #ffffff;
+  --muted: #f1efe6;
+  --muted-foreground: #6e6c5d;
+  --faint: #8e8c7c;
+  --border: #e6e2d6;
+  --subtle: #fbfaf5;
+  --sidebar: #fbfaf5;
+  --primary: #f0a93b;
+  --primary-foreground: #17170f;
+  --accent-text: #845d20;
+  --success: #2f9a5b;
+  --danger: #c9533c;
+  --info: #3f7fc4;
+  --console: #1e201b;
+  --console-deep: #0b0b08;
+  --console-foreground: #dad7c8;
+  --console-muted: #8c8a78;
+  --console-border: #3a3c33;
+}
+
+.dark {
+  --background: #13120f;
+  --foreground: #f3f0e6;
+  --card: #1c1b16;
+  --muted: #26251e;
+  --muted-foreground: #a8a594;
+  --faint: #8a8775;
+  --border: #2c2a22;
+  --subtle: #100f0b;
+  --sidebar: #1a1913;
+  --accent-text: #f5c77e;
+  --success: #3fae6b;
+  --danger: #e0735a;
+  --info: #6aa3de;
+  --console: #0f0f0b;
+  --console-border: #2c2a22;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --color-subtle: var(--subtle);
+  --color-sidebar: var(--sidebar);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent-text: var(--accent-text);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-accent: var(--muted);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: var(--danger);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-console: var(--console);
+  --color-console-deep: var(--console-deep);
+  --color-console-foreground: var(--console-foreground);
+  --color-console-muted: var(--console-muted);
+  --color-console-border: var(--console-border);
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ---------- Signature utilities ---------- */
+@utility dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+@utility flight-path {
+  height: 3px;
+  width: 64px;
+  background: repeating-linear-gradient(90deg, var(--primary) 0 6px, transparent 6px 10px);
+}
+
+/* ---------- Animasi ---------- */
+@keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes counter-orbit { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes sweep { to { transform: rotate(360deg); } }
+@keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(2.4); opacity: 0; } }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sinyal di jaringan saraf (Lowongan) & paket data (Sumber): titik yang meluncur di offset-path. */
+@keyframes travel { from { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } to { offset-distance: 100%; opacity: 0; } }
+.neural-signal { offset-rotate: 0deg; animation-name: travel; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+/* Bintang konstelasi (Profil) berkedip pelan. */
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+.anim-twinkle { animation: twinkle 3.2s ease-in-out infinite; }
+
+.anim-blink { animation: blink 1.4s ease-in-out infinite; }
+.anim-rise { animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.anim-pulse-ring { animation: pulse-ring 2.6s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
