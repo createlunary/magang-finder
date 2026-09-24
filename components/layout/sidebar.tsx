@@ -96,17 +96,26 @@ export function Sidebar() {
   );
 }
 
-function Keluar() {
+/** Email sesi panel lokal (dibaca setelah mount: localStorage tidak ada saat render server). */
+export function useEmailSesi() {
   const [email, setEmail] = useState<string | null>(null);
   useEffect(() => setEmail(emailSesi()), []);
+  return email;
+}
+
+export function keluar() {
+  if (!window.confirm("Keluar dari panel kontrol di perangkat ini?")) return;
+  hapusToken();
+  window.location.href = "/masuk";
+}
+
+function Keluar() {
+  const email = useEmailSesi();
   if (!email) return null;
   return (
     <button
       type="button"
-      onClick={() => {
-        hapusToken();
-        window.location.href = "/masuk";
-      }}
+      onClick={keluar}
       title={`Keluar dari ${email}`}
       className="flex items-center gap-3 rounded-[9px] px-3.5 py-2 text-left text-[12.5px] text-muted-foreground hover:bg-muted hover:text-foreground"
     >

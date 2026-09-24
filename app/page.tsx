@@ -95,7 +95,7 @@ export default function DashboardPage() {
 
       {/* Hero */}
       <div className="flex flex-wrap items-start gap-6 px-4 pt-6 sm:px-6 lg:gap-9 lg:px-10 lg:pt-8">
-        <div className="anim-rise flex w-full max-w-[520px] shrink-0 flex-col gap-3">
+        <div className="anim-rise flex w-full min-w-0 max-w-[520px] shrink-0 flex-col gap-3">
           {isLoading ? (
             <Skeleton className="aspect-square w-full rounded-full" />
           ) : (

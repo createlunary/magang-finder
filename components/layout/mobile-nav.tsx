@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation";
 import { useRunProgress } from "@/hooks/use-api";
 import { cn } from "@/lib/utils";
 import { BrandMark } from "./brand-mark";
-import { LENCANA, NAV_AKTIF } from "./sidebar";
+import { LogOut } from "lucide-react";
+import { IS_LOKAL } from "@/lib/mode";
+import { keluar, LENCANA, NAV_AKTIF, useEmailSesi } from "./sidebar";
 import { ThemeToggle } from "./theme-toggle";
 
 /** Label tab bawah dipersingkat supaya enam tab muat di layar 360 px. */
@@ -27,6 +29,7 @@ export function MobileTopBar() {
           {running ? "AKTIF" : LENCANA.singkat}
         </span>
         <ThemeToggle compact />
+        {IS_LOKAL && <TombolKeluar />}
       </div>
     </header>
   );
@@ -60,5 +63,21 @@ export function MobileTabBar() {
         );
       })}
     </nav>
+  );
+}
+
+function TombolKeluar() {
+  const email = useEmailSesi();
+  if (!email) return null;
+  return (
+    <button
+      type="button"
+      onClick={keluar}
+      aria-label={`Keluar dari ${email}`}
+      title={`Keluar dari ${email}`}
+      className="flex size-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+    >
+      <LogOut className="size-[18px]" />
+    </button>
   );
 }

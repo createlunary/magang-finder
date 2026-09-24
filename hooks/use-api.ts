@@ -3,7 +3,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { api } from "@/lib/api";
-import { IS_SHOWCASE } from "@/lib/mode";
+import { IS_LOKAL, IS_SHOWCASE } from "@/lib/mode";
+
+/**
+ * Panel bisa dibuka dari beberapa perangkat sekaligus (PC + HP). Run atau Deep Search
+ * yang dimulai di satu perangkat harus terlihat di perangkat lain tanpa reload, jadi
+ * status diperiksa berkala juga saat diam — pelan, dan berhenti saat tab tidak terlihat
+ * (refetchIntervalInBackground bawaan = false).
+ */
+const PANTAU_DIAM_MS = IS_LOKAL ? 4000 : false;
+const PANTAU_RISET_MS = IS_LOKAL ? 10_000 : false;
 import type { Job, JobQuery, Profile, Settings, Source, SourceKey } from "@/lib/types";
 
 export const qk = {
@@ -98,7 +107,7 @@ export function useRunProgress() {
   const query = useQuery({
     queryKey: qk.progress,
     queryFn: api.getRunProgress,
-    refetchInterval: (q) => (q.state.data?.running ? 500 : false),
+    refetchInterval: (q) => (q.state.data?.running ? 500 : PANTAU_DIAM_MS),
   });
 
   const wasRunning = useRef(false);
@@ -138,7 +147,7 @@ export function useResearch(id: string) {
     queryKey: qk.research(id),
     queryFn: () => api.getResearch(id),
     enabled: !!id,
-    refetchInterval: (q) => (q.state.data?.status === "berjalan" ? 3000 : false),
+    refetchInterval: (q) => (q.state.data?.status === "berjalan" ? 3000 : PANTAU_RISET_MS),
   });
 
   // Riset selesai → backend sudah menilai ulang lowongan perusahaan ini; muat skor barunya.

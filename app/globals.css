@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import "tailwindcss";
+/* Cache build pratinjau showcase berisi biner yang terbaca sebagai nama kelas palsu. */
+@source not "../.next-showcase";
 @import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));

@@ -51,9 +51,11 @@ export function OrbitRadar({
   const labelSemua = skala >= 0.8;
 
   return (
-    <div ref={box} className="w-full max-w-[520px]" style={{ height: SIZE * skala }}>
+    // Radar 520 px diposisikan absolut: tanpa itu lebar aslinya (sebelum diskalakan) menjadi
+    // lebar minimum kolom induk, dan di HP seluruh dashboard terdorong keluar layar.
+    <div ref={box} className="relative w-full max-w-[520px]" style={{ height: SIZE * skala }}>
     <div
-      className="dot-grid relative overflow-hidden rounded-full border border-console-border bg-console-deep"
+      className="dot-grid absolute top-0 left-0 overflow-hidden rounded-full border border-console-border bg-console-deep"
       style={{ width: SIZE, height: SIZE, transform: `scale(${skala})`, transformOrigin: "top left" }}
       role="group"
       aria-label="Radar orbit: jarak dari pusat menunjukkan skor kecocokan"
